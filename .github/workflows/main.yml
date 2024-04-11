@@ -33,7 +33,7 @@ jobs:
         ECR_REPOSITORY: clo835finalproject
         IMAGE_TAG: v1.3
       run: |
-        cd CLO835-Final-Project-Assignments
+        cd CLO835--Final-Project-Assignments
         ls -ltra
         # Docker build
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
