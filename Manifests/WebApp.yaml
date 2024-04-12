@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-deploy-v1
+  namespace: final
+  labels:
+    app: employees
+    version: v1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: employees
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: employees
+        version: v1
+    spec:
+      containers:
+      - name: webapp-v1
+        image: 168491602991.dkr.ecr.us-east-1.amazonaws.com/webapp:v1
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - secretRef:
+            name: mypasswordapp
+        env: 
+          - name: DBPORT
+            value: "3306"
+          - name: DBHOST
+            value: "192.168.88.19"

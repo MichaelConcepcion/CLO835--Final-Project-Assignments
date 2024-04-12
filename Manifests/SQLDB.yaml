@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database-deploy
+  namespace: final
+  labels:
+    app: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: sqldb
+        image: 168491602991.dkr.ecr.us-east-1.amazonaws.com/sql:v1
+        ports:
+        - containerPort: 3306
+        envFrom:
+        - secretRef:
+            name: mypassword
