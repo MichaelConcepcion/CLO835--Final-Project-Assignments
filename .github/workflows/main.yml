@@ -1,4 +1,3 @@
-
 name: Deploy to ECR
 
 on: 
@@ -14,10 +13,11 @@ jobs:
 
    
     steps:
-
+    
     - name: Check out code
       uses: actions/checkout@v2
-
+      
+        
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
@@ -27,20 +27,46 @@ jobs:
         AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
         AWS_REGION: us-east-1
 
-    - name: Build, test, tag, and push image to Amazon ECR
+    - name: Build, test, tag, and push MySQL image to Amazon ECR
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: clo835finalproject
-        IMAGE_TAG: v1.3
+        ECR_REPOSITORY: clo835-assignment1-ecr
+        #IMAGE_TAG: v0.2
       run: |
-        cd CLO835--Final-Project-Assignments
+        # Generate IMAGE_TAG using current date and time
+        IMAGE_TAG=mysql-$(date +"%Y-%m-%d-%H%M%S")
+        echo "IMAGE_TAG: $IMAGE_TAG"
+        
+
         ls -ltra
-        # Docker build
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        # Docker build for mysql server
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:"${IMAGE_TAG}" -f Dockerfile_mysql .
         # Unit test
-        docker run -d -p 80:8080 --name nodeapp $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker run -d --name mysql -e MYSQL_ROOT_PASSWORD=pw -d $ECR_REGISTRY/$ECR_REPOSITORY:"${IMAGE_TAG}"
         docker ps
         echo "Pause for 10 seconds to let container start"
         sleep 10
-        curl localhost -vvv
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker exec mysql mysql -ppw -e "show databases;"
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:"${IMAGE_TAG}"
+        
+    - name: Build, test, tag, and push WebAPP image to Amazon ECR
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+
+        ls -ltra
+        # Docker build for mysql server
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:"${IMAGE_TAG}" -f Dockerfile .
+        # Unit test
+        export DBHOST=`docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mysql`
+        echo $DBHOST
+        export DBPORT=3306
+        export DBUSER=root
+        export DATABASE=employees
+        export DBPWD=pw
+        export APP_COLOR=blue
+        docker run -p 8080:8080  -e DBHOST=$DBHOST -e DBPORT=$DBPORT -e  DBUSER=$DBUSER -e DBPWD=$DBPWD -e DATABASE=$DATABASE -e APP_COLOR=$APP_COLOR -d $ECR_REGISTRY/$ECR_REPOSITORY:"${IMAGE_TAG}"
+        docker ps
+        echo "Pause for 10 seconds to let container start"
+        sleep 10
+        curl 127.0.0.1:8080
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:"${IMAGE_TAG}"
