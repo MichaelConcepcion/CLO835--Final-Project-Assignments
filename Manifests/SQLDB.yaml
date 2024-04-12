@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: database-deploy
+  name: mysql
   namespace: final
   labels:
     app: mysql

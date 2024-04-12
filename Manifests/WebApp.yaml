@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: webapp-deploy-v1
+  name: webapp
   namespace: final
   labels:
-    app: employees
+    app: app
     version: v1
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: employees
+      app: app
       version: v1
   template:
     metadata:
       labels:
-        app: employees
+        app: app
         version: v1
     spec:
       containers:
-      - name: webapp-v1
+      - name: webapp
         image: 168491602991.dkr.ecr.us-east-1.amazonaws.com/webapp:v1
         ports:
         - containerPort: 8080
