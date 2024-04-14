@@ -12,6 +12,7 @@ DBUSER = os.environ.get("DBUSER") or "root"
 DBPWD = os.environ.get("DBPWD") or "passwors"
 DATABASE = os.environ.get("DATABASE") or "employees"
 COLOR_FROM_ENV = os.environ.get('APP_COLOR') or "lime"
+IMAGE_URL = os.environ.get("IMAGE_URL") or ""
 DBPORT = int(os.environ.get("DBPORT"))
 
 # Create a connection to the MySQL database
@@ -28,6 +29,7 @@ table = 'employee';
 
 # Define the supported color codes
 color_codes = {
+    "imageUrl": IMAGE_URL,
     "red": "#e74c3c",
     "green": "#16a085",
     "blue": "#89CFF0",
@@ -47,7 +49,7 @@ COLOR = random.choice(["red", "green", "blue", "blue2", "darkblue", "pink", "lim
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
-    return render_template('addemp.html', color=color_codes[COLOR])
+    return render_template('addemp.html', color=IMAGE_URL)
 
 @app.route("/about", methods=['GET','POST'])
 def about():
