@@ -30,7 +30,7 @@ jobs:
     - name: Build, test, tag, and push MySQL image to Amazon ECR
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: clo835-assignment1-ecr
+        ECR_REPOSITORY: clo835-project-ecr
         #IMAGE_TAG: v0.2
       run: |
         # Generate IMAGE_TAG using current date and time
@@ -42,7 +42,7 @@ jobs:
         # Docker build for mysql server
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:"${IMAGE_TAG}" -f Dockerfile_mysql .
         # Unit test
-        docker run -d --name mysql -e MYSQL_ROOT_PASSWORD=pw -d $ECR_REGISTRY/$ECR_REPOSITORY:"${IMAGE_TAG}"
+        docker run --name mysql -e MYSQL_ROOT_PASSWORD=pw -d $ECR_REGISTRY/$ECR_REPOSITORY:"${IMAGE_TAG}"
         docker ps
         echo "Pause for 10 seconds to let container start"
         sleep 10
@@ -52,12 +52,15 @@ jobs:
     - name: Build, test, tag, and push WebAPP image to Amazon ECR
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-
+        ECR_REPOSITORY: clo835-project-ecr
+      run: |
+        IMAGE_TAG=WebAPP-$(date +"%Y%m%d%H%M%S")
+        echo "IMAGE_TAG: $IMAGE_TAG"
         ls -ltra
         # Docker build for mysql server
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:"${IMAGE_TAG}" -f Dockerfile .
         # Unit test
-        export DBHOST=`docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mysql`
+        export DBHOST=docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mysql
         echo $DBHOST
         export DBPORT=3306
         export DBUSER=root
