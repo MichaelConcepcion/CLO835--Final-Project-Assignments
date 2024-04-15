@@ -1,11 +1,5 @@
-# Install the required MySQL package
+## WebApplication and K8s Manifest files by Mike and Prason.
 
-sudo apt-get update -y
-sudo apt-get install mysql-client -y
-
-# Running application locally
-pip3 install -r requirements.txt
-sudo python3 app.py
 # Building and running 2 tier web application locally
 ### Building mysql docker image 
 ```docker build -t my_db -f Dockerfile_mysql . ```
@@ -35,7 +29,9 @@ export DBPORT=3306
 export DBUSER=root
 export DATABASE=employees
 export DBPWD=pw
-export APP_COLOR=blue
+export IMAGE_URL=<your-bucket-Image-url>
+export GROUP_NAME=Group-1(PM)
+export SLOGAN=Work smart not hard
 ```
 ### Run the application, make sure it is visible in the browser
-```docker run -p 8080:8080  -e DBHOST=$DBHOST -e DBPORT=$DBPORT -e  DBUSER=$DBUSER -e DBPWD=$DBPWD  my_app```
+```docker run -p 8080:8080  -e DBHOST=$DBHOST -e DBPORT=$DBPORT -e  DBUSER=$DBUSER -e DBPWD=$DBPWD -e IMAGE_URL=$IMAGE_URL -e GROUP_NAME=$GROUP_NAME -e SLOGAN=$SLOGAN my_app```
