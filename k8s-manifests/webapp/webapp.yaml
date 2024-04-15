@@ -40,7 +40,7 @@ spec:
                   name: dbsecret
                   key: pwd
             - name: IMAGE_URL
-              value: "https://picsum.photos/200/300"
+              value: "https://bucketclo835.s3.amazonaws.com/myImg.jpg"
             - name: GROUP_NAME
               value: "Group-1"
             - name: SLOGAN
