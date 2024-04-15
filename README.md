@@ -29,9 +29,9 @@ export DBPORT=3306
 export DBUSER=root
 export DATABASE=employees
 export DBPWD=pw
-export IMAGE_URL=<your-bucket-Image-url>
-export GROUP_NAME=Group-1(PM)
-export SLOGAN=Work smart not hard
+export GROUP_NAME=Group-1
+export SLOGAN="Work smart not hard"
+export IMAGE_URL=<your-s3-url>
 ```
 ### Run the application, make sure it is visible in the browser
 ```docker run -p 8080:8080  -e DBHOST=$DBHOST -e DBPORT=$DBPORT -e  DBUSER=$DBUSER -e DBPWD=$DBPWD -e IMAGE_URL=$IMAGE_URL -e GROUP_NAME=$GROUP_NAME -e SLOGAN=$SLOGAN my_app```
