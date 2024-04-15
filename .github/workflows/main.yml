@@ -30,7 +30,7 @@ jobs:
     - name: Build, test, tag, and push MySQL image to Amazon ECR
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: sql
+        ECR_REPOSITORY: clo835-finalproject-pg
         #IMAGE_TAG: v0.2
       run: |
         # Generate IMAGE_TAG using current date and time
@@ -52,7 +52,7 @@ jobs:
     - name: Build, test, tag, and push WebAPP image to Amazon ECR
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: webapp
+        ECR_REPOSITORY: clo835-finalproject-pg
       run: |
         IMAGE_TAG=WebAPP-$(date +"%Y%m%d%H%M%S")
         echo "IMAGE_TAG: $IMAGE_TAG"
