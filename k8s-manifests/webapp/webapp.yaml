@@ -18,6 +18,7 @@ spec:
         app: app
         version: v1
     spec:
+      serviceAccountName: clo835-serviceaccount
       containers:
         - name: webapp
           image: 168491602991.dkr.ecr.us-east-1.amazonaws.com/webapp:v1
@@ -43,4 +44,4 @@ spec:
             - name: GROUP_NAME
               value: "Group-1"
             - name: SLOGAN
-              value: "Irina Go to hell"
+              value: "This project was done by Mike and Prason."
