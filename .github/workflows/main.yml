@@ -62,12 +62,13 @@ jobs:
         # Unit test
         export DBHOST=`docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mysql`
         echo $DBHOST
+        export DBPORT=3306
         export DBUSER=root
         export DATABASE=employees
         export DBPWD=pw
         export IMAGE_URL=https://picsum.photos/200/300
         export GROUP_NAME=Group-1
-        export SLOGAN=WorkHard
+        export SLOGAN=WORKSMARTNOTHARD
         docker run -p 8080:8080 -e DBHOST=$DBHOST -e DBPORT=$DBPORT -e DBUSER=$DBUSER -e DBPWD=$DBPWD -e DATABASE=$DATABASE -e IMAGE_URL=$IMAGE_URL -e GROUP_NAME=$GROUP_NAME -e SLOGAN=$SLOGAN -d $ECR_REGISTRY/$ECR_REPOSITORY:"${IMAGE_TAG}"
         docker ps
         echo "Pause for 10 seconds to let container start"
