@@ -12,6 +12,9 @@ DBPWD = os.environ.get("DBPWD") or "password"
 DATABASE = os.environ.get("DATABASE") or "employees"
 COLOR_FROM_ENV = os.environ.get('APP_COLOR') or "lime"
 DBPORT = int(os.environ.get("DBPORT", 3306))  # Default MySQL port is 3306
+IMAGE_URL = os.environ.get("IMAGE_URL") or ""
+GROUP_NAME = os.environ.get("GROUP_NAME") or "Mike and Prason (Duo)"
+SLOGAN = os.environ.get("SLOGAN") or "CLO835 Employee DBMS by MP"
 
 # Create a connection to the MySQL database
 db_conn = connections.Connection(
@@ -44,13 +47,12 @@ COLOR = random.choice(["red", "green", "blue", "blue2", "darkblue", "pink", "lim
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
-    return render_template('addemp.html', color=color_codes[COLOR])
+    return render_template('addemp.html', color=IMAGE_URL, head=GROUP_NAME, slogan=SLOGAN)
 
 
 @app.route("/about", methods=['GET', 'POST'])
 def about():
-    return render_template('about.html', color=color_codes[COLOR])
-
+    return render_template('about.html', color=IMAGE_URL, head=GROUP_NAME, slogan=SLOGAN)
 
 @app.route("/addemp", methods=['POST'])
 def AddEmp():
@@ -71,13 +73,15 @@ def AddEmp():
     finally:
         cursor.close()
 
-    print("All modifications done...")
-    return render_template('addempoutput.html', name=emp_name, color=color_codes[COLOR])
+
+    print("all modification done...")
+    return render_template('addempoutput.html', name=emp_name, color=IMAGE_URL, head=GROUP_NAME, slogan=SLOGAN)
+
 
 
 @app.route("/getemp", methods=['GET', 'POST'])
 def GetEmp():
-    return render_template("getemp.html", color=color_codes[COLOR])
+    return render_template("getemp.html", color=IMAGE_URL)
 
 
 @app.route("/fetchdata", methods=['GET', 'POST'])
@@ -107,9 +111,8 @@ def FetchData():
     finally:
         cursor.close()
 
-    return render_template("getempoutput.html", id=output.get("emp_id"), fname=output.get("first_name"),
-                           lname=output.get("last_name"), interest=output.get("primary_skills"),
-                           location=output.get("location"), color=color_codes[COLOR])
+    return render_template("getempoutput.html", id=output["emp_id"], fname=output["first_name"],
+                           lname=output["last_name"], interest=output["primary_skills"], location=output["location"], color=IMAGE_URL, head=GROUP_NAME, slogan=SLOGAN)
 
 
 if __name__ == '__main__':
