@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp
+  namespace: final
+  labels:
+    app: app
+    version: v1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: app
+        version: v1
+    spec:
+      containers:
+        - name: webapp
+          image: 168491602991.dkr.ecr.us-east-1.amazonaws.com/webapp:v1
+          ports:
+            - containerPort: 8080
+          env: 
+            - name: DBPORT
+              value: "3306"
+            - name: DBHOST
+              value: "mysql-service-clusterip.final.svc.cluster.local"
+            - name: DBUSER
+              valueFrom:
+                secretKeyRef:
+                  name: dbsecret
+                  key: username  
+            - name: DBPWD
+              valueFrom:
+                secretKeyRef:
+                  name: dbsecret
+                  key: pwd
+            - name: IMAGE_URL
+              value: "https://picsum.photos/200/300"
+            - name: GROUP_NAME
+              value: "Group-1"
+            - name: SLOGAN
+              value: "Irina Go to hell"
