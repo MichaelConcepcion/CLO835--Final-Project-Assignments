@@ -74,5 +74,5 @@ jobs:
         echo "Pause for 10 seconds to let container start"
         sleep 10
         docker ps
-        curl 127.0.0.1:8080
+        curl 127.0.0.1:81
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:"${IMAGE_TAG}"
