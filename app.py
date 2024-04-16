@@ -12,7 +12,7 @@ DBPWD = os.environ.get("DBPWD") or "password"
 DATABASE = os.environ.get("DATABASE") or "employees"
 COLOR_FROM_ENV = os.environ.get('APP_COLOR') or "lime"
 DBPORT = int(os.environ.get("DBPORT", 3306))  # Default MySQL port is 3306
-IMAGE_URL = os.environ.get("IMAGE_URL") or ""
+IMAGE_URL = os.environ.get("IMAGE_URL") or "https://picsum.photos/200/300"
 GROUP_NAME = os.environ.get("GROUP_NAME") or "Mike and Prason (Duo)"
 SLOGAN = os.environ.get("SLOGAN") or "CLO835 Employee DBMS by MP"
 
