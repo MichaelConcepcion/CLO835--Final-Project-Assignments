@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: img-config
+  namespace: final
+data:
+  image_url: "https://bucketclo835.s3.amazonaws.com/myImg.jpg"
