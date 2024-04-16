@@ -126,9 +126,9 @@ if __name__ == '__main__':
         COLOR = args.color
         if COLOR_FROM_ENV:
             print(f"A color was set through environment variable - {COLOR_FROM_ENV}. However, color from the command line argument takes precedence.")
-    elif COLOR_FROM_ENV:
-        print("No Command line argument. Color from environment variable =", COLOR_FROM_ENV)
-        COLOR = COLOR_FROM_ENV
+    elif IMAGE_URL:
+        print("Getting Background Image using URL =", IMAGE_URL)
+        COLOR = IMAGE_URL
     else:
         print("No command line argument or environment variable. Picking a Random Color =", COLOR)
 
@@ -137,4 +137,4 @@ if __name__ == '__main__':
         print("Color not supported. Received '" + COLOR + "' expected one of " + SUPPORTED_COLORS)
         exit(1)
 
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    app.run(host='0.0.0.0', port=81, debug=True)

@@ -10,7 +10,7 @@ spec:
   type: LoadBalancer
   ports:
   - port: 80
-    targetPort: 8080
+    targetPort: 81
   selector:
     app: app
     version: v1
