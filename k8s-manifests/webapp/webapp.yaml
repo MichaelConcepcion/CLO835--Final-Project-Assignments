@@ -28,7 +28,7 @@ spec:
             - name: DBPORT
               value: "3306"
             - name: DBHOST
-              value: "mysql-service-clusterip.final.svc.cluster.local"
+              value: "mysql-service.final.svc.cluster.local"
             - name: DBUSER
               valueFrom:
                 secretKeyRef:
