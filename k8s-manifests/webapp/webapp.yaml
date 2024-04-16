@@ -7,7 +7,7 @@ metadata:
     app: app
     version: v1
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: app
@@ -21,7 +21,7 @@ spec:
       serviceAccountName: clo835-serviceaccount
       containers:
         - name: webapp
-          image: 168491602991.dkr.ecr.us-east-1.amazonaws.com/webapp:v1
+          image: 168491602991.dkr.ecr.us-east-1.amazonaws.com/clo835-finalproject-pg:WebAPP-20240415225840
           ports:
             - containerPort: 8080
           env: 
@@ -40,8 +40,13 @@ spec:
                   name: dbsecret
                   key: pwd
             - name: IMAGE_URL
-              value: "https://bucketclo835.s3.amazonaws.com/myImg.jpg"
+              valueFrom:
+                configMapKeyRef:
+                  name: img-config
+                  key: image_url
             - name: GROUP_NAME
               value: "Group-1"
             - name: SLOGAN
               value: "This project was done by Mike and Prason."
+      imagePullSecrets:
+        - name: imagepullsecret
