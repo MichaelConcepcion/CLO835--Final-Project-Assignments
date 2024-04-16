@@ -30,8 +30,8 @@ export DBUSER=root
 export DATABASE=employees
 export DBPWD=pw
 export GROUP_NAME=Group-1
-export SLOGAN="Work smart not hard"
-export IMAGE_URL=<your-s3-url>
+export SLOGAN=WorkSmartNotHard
+export IMAGE_URL=https://bucketclo835.s3.amazonaws.com/Image-2.jpeg
 ```
 ### Run the application, make sure it is visible in the browser
 ```docker run -p 8080:8080  -e DBHOST=$DBHOST -e DBPORT=$DBPORT -e  DBUSER=$DBUSER -e DBPWD=$DBPWD -e IMAGE_URL=$IMAGE_URL -e GROUP_NAME=$GROUP_NAME -e SLOGAN=$SLOGAN my_app```
